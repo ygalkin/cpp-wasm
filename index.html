@@ -1,0 +1,47 @@
+<html>
+<body>
+    <script src="out-app.js"></script>
+
+    <script>
+        Module.onRuntimeInitialized = _ => {
+            document.getElementById("id-string").innerHTML = UTF8ToString(_hello_world_wasm());
+            document.getElementById("id-int").innerHTML = _process_int(5);
+        };
+
+        function fnEncode() {
+	var stack = stackSave();
+            var str = allocateUTF8OnStack(document.getElementById("input-txt").value);
+            var buff = stackAlloc(1024);
+            _process_string(str, buff, 1024);
+            document.getElementById("output-txt").value = UTF8ToString(buff);
+	stackRestore(stack);
+        }
+    </script>
+
+    <table style="width:100%">
+        <tr>
+            <td> <span id="id-string"></span> </td>
+        </tr>
+        <tr>
+            <td> <span id="id-int"></span> </td>
+        </tr>
+        <tr>
+            <td> <label for="input-txt">Input:</label> </td>
+        </tr>
+        <tr>
+            <td> <textarea id="input-txt" name="input-txt" rows="4" cols="50"> </textarea> </td>
+        </tr>
+        <tr>
+            <td> <label for="output-txt">Output:</label> </td>
+        </tr>
+        <tr>
+            <td> <textarea id="output-txt" disabled readonly name="output-txt" rows="4" cols="50"> </textarea> </td>
+        </tr>
+        <tr>
+            <td> <button type="encode-btn" onclick="fnEncode()">Encode</button> </td>
+        </tr>
+    </table>
+
+</body>
+
+</html>
