@@ -9,12 +9,14 @@
         };
 
         function fnEncode() {
-	var stack = stackSave();
+            var stack = stackSave();
+
             var str = allocateUTF8OnStack(document.getElementById("input-txt").value);
             var buff = stackAlloc(1024);
             _process_string(str, buff, 1024);
             document.getElementById("output-txt").value = UTF8ToString(buff);
-	stackRestore(stack);
+
+            stackRestore(stack);
         }
     </script>
 
