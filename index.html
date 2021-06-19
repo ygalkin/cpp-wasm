@@ -4,8 +4,8 @@
 
     <script>
         Module.onRuntimeInitialized = _ => {
-            document.getElementById("id-string").innerHTML = UTF8ToString(_hello_world_wasm());
-            document.getElementById("id-int").innerHTML = _process_int(5);
+            document.getElementById("id-string").innerHTML = UTF8ToString(_hello_wasm_str());
+            document.getElementById("id-int").innerHTML = _hello_wasm_int(15);
         };
 
         function fnEncode() {
@@ -13,7 +13,7 @@
 
             var str = allocateUTF8OnStack(document.getElementById("input-txt").value);
             var buff = stackAlloc(1024);
-            _process_string(str, buff, 1024);
+            _encode_base64_string(str, buff, 1024);
             document.getElementById("output-txt").value = UTF8ToString(buff);
 
             stackRestore(stack);

@@ -21,16 +21,20 @@ static std::string base64_encode(const std::string& in) {
 }
 
 extern "C" {
-    EMSCRIPTEN_KEEPALIVE const char* hello_world_wasm() {
+    EMSCRIPTEN_KEEPALIVE const char* hello_wasm_str() {
         return "Hello WASM!";
     }
 
-    EMSCRIPTEN_KEEPALIVE void process_string(const char* s, char* buff, size_t size) {
-        auto encoded = base64_encode(s);
-        strncpy(buff, encoded.c_str(), std::min(size, encoded.size()));
+    EMSCRIPTEN_KEEPALIVE int EMSCRIPTEN_KEEPALIVE hello_wasm_int(int n) {
+        return n;
     }
 
-    EMSCRIPTEN_KEEPALIVE int EMSCRIPTEN_KEEPALIVE process_int(int n) {
-        return n + 10;
+    EMSCRIPTEN_KEEPALIVE void encode_base64_string(const char* s, char* buff, size_t size) {
+        if (s == nullptr || buff == nullptr || size == 0) {
+            return;
+        }
+
+        auto encoded = base64_encode(s);
+        strncpy(buff, encoded.c_str(), std::min(size, encoded.size()));
     }
 }
