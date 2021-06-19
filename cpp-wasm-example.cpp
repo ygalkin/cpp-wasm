@@ -35,6 +35,7 @@ extern "C" {
         }
 
         auto encoded = base64_encode(s);
+        memset(buff, 0, size);
         strncpy(buff, encoded.c_str(), std::min(size, encoded.size()));
     }
 }
